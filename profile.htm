@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background:rgba(71, 168, 163, 0.8);
+            overflow: hidden;
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .container {
+            text-align: center;
+            background: rgba(220, 22, 22, 0.8);
+            padding: 30px;
+            background: url('https://i.pinimg.com/736x/da/14/b0/da14b0a8018d5b6f171cdcd3321f109d.jpg') no-repeat center center/cover;
+            border-radius: 20px;
+            box-shadow: 0px 0px 15px rgba(217, 6, 6, 0.2);
+        }
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        .key-box {
+            background: #12b479;
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .key-text {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .copy-btn {
+            background: #4dff00;
+            color: rgb(255, 255, 255);
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .social-links {
+            margin-top: 20px;
+        }
+        .social-links a {
+            margin: 0 10px;
+            font-size: 24px;
+            color: #fba801;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <audio autoplay loop>
+        <source src="https://www.soundjay.com/button/beep-07.wav" type="audio/wav">
+    </audio>
+    <div class="container">
+        <img src="https://i.pinimg.com/736x/5c/af/86/5caf867ec3cb410f77f0ac1c540d9934.jpg" alt="Avatar" class="avatar" id="1Yhrdd9_kvzU6vtY0DxMo05qr8nhJikqJ" >
+        <h2 style="color: rgb(247, 35, 6);">Nguyễn Huỳnh Đức</h2>
+        <div class="key-box">
+            <span class="key-text" id="key"></span>
+            <button class="copy-btn" onclick="copyKey()">Sao chép</button>
+        </div>
+        <div class="social-links">
+            <a href="https://www.facebook.com/hhduccuti" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.youtube.com/@M%C3%A8ochill-s8o" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+    </div>
+    <script>
+        function getKeyFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('key') || 'NONE';
+        }
+        
+        function copyKey() {
+            let keyText = document.getElementById("key").innerText;
+            navigator.clipboard.writeText(keyText).then(() => {
+                alert("Key đã được sao chép!");
+            });
+        }
+        
+        document.getElementById("key").innerText = getKeyFromURL();
+    </script>
+</body>
+</html>

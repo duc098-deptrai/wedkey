@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ sơ cá nhân</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+        .profile {
+            margin-top: 10vh;
+        }
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid white;
+            transition: transform 0.3s;
+        }
+        .avatar:hover {
+            transform: scale(1.1);
+        }
+        .name {
+            font-size: 2em;
+            margin-top: 10px;
+        }
+        .social-icons {
+            margin-top: 15px;
+        }
+        .social-icons a {
+            color: white;
+            font-size: 1.5em;
+            margin: 0 10px;
+            transition: transform 0.3s;
+        }
+        .social-icons a:hover {
+            transform: scale(1.2);
+        }
+        .key-input {
+            margin-top: 20px;
+        }
+        .key-input input {
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            text-align: center;
+            background-color: white;
+            color: black;
+        }
+        .key-input button {
+            margin-left: 10px;
+            padding: 10px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+    </style>
+</head>
+<body>
+        <img src="https://drive.usercontent.google.com/download?id=1Yhrdd9_kvzU6vtY0DxMo05qr8nhJikqJ&export=view&authuser=0" alt="Avatar" class="avatar" id="avatar">
+        <div class="key-input">
+            <label for="key">Key hôm nay:</label>
+            <input type="text" id="key" readonly>
+        </div>
+    </div>
+    <script>
+        gsap.from(".avatar", { duration: 1, opacity: 0, scale: 0.5, ease: "bounce" });
+        gsap.from(".name", { duration: 1.5, opacity: 0, x: -50 });
+        gsap.from(".social-icons a", { duration: 1, opacity: 0, scale: 0.5, stagger: 0.2 });
+
+        document.getElementById("avatar").addEventListener("mouseover", function() {
+            document.getElementById("hoverSound").play();
+        });
+
+        function generateRandomKey(length) {
+            let chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+            let key = '';
+            for (let i = 0; i < length; i++) {
+                key += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return key;
+        }
+
+        function updateKey() {
+            let today = new Date().toISOString().split('T')[0];
+            let storedKeyData = JSON.parse(localStorage.getItem("keyData")) || {};
+            
+            if (storedKeyData.date !== today) {
+                let newKey = generateRandomKey(25);
+                storedKeyData = { date: today, key: newKey };
+                localStorage.setItem("keyData", JSON.stringify(storedKeyData));
+            }
+            
+            document.getElementById("key").value = storedKeyData.key;
+        }
+
+        function copyKey() {
+            let keyInput = document.getElementById("key");
+            keyInput.select();
+            keyInput.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(keyInput.value);
+            alert("Key đã được sao chép: " + keyInput.value);
+        }
+
+        updateKey();
+        setInterval(updateKey, 60000); // Kiểm tra mỗi phút
+    </script>
+</body>
+</html>
